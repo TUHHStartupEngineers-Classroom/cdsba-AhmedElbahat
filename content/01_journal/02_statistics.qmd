@@ -1,7 +1,55 @@
----
-title: "Statistical Concepts"
----
+```{r}
+random_vars <- readRDS("C:/Users/ahmed/OneDrive/Dokumente/Causal_Data_Science_Data/random_vars.rds")
+age_mean <- mean(random_vars[1:1000,"age"])
+Income_mean <- mean(random_vars[1:1000,"income"])
+print(paste("Expected value of age and income=:",age_mean,"and the income is:", Income_mean))
+```
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+
+
+```{r}
+age_var <- var(random_vars[1:1000,"age"])
+income_var <- var(random_vars[1:1000,"income"])
+print(paste("Variance of age and=:",age_var,"and the income variance is:", income_var))
+```
+```{r}
+age_sd <- sd(random_vars[1:1000,"age"])
+income_sd <- sd(random_vars[1:1000,"income"])
+print(paste("standard deviation of age and=:",age_var,"and the income standard deviation is:", income_var))
+
+print(paste("I think that it does not make sense to compare between age that barely exceed 100 and the incomes that the values are thounds and also the variables are completely different so they can not be compared"))
+```
+
+
+```{r}
+cor_age_income <- cor(random_vars[1:1000,"age"], random_vars[1:1000,"income"])
+cov_age_income<- cov(random_vars[1:1000,"age"],random_vars[1:1000,"income"])
+print(paste("correlation is ", cor_age_income,"and the covariance is:", cov_age_income))
+```
+
+```{r}
+print(paste("4) The correlation is eassier to interrupt as the correlation is standardized measure and the value that we got is between 1 and -1. It is not the best result as it is not near either values. So it does not have the strongest linear relation and also the direction is know as it starts from the number that I got and go the positive x axis."))
+
+```
+
+```{r}
+library(dplyr)
+age_less_equal_18 <- random_vars %>%
+  filter(age <= 18)
+income_until_18 <- mean(age_less_equal_18$income)
+cat("Expected income at age less and equa to 18 =", income_until_18)
+```
+
+
+```{r}
+age_moreThan_18_to_65 <- random_vars %>%
+  filter(age>=18 & age<=65)
+incomeFrom_18_65 <- mean(age_moreThan_18_to_65$income)
+cat("Expected income at age less and equa to 18 =",incomeFrom_18_65)
+```
+```{r}
+age_equal_65 <- random_vars %>%
+  filter(age>=65)
+incomeFrom_65 <- mean(age_equal_65$income)
+cat("Expected income at age less and equa to 18 =",incomeFrom_65)
+```
