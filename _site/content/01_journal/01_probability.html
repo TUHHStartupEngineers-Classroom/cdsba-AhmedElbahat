@@ -77,9 +77,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -366,7 +363,7 @@ Note
 <p>Use ``` to delimit blocks of source code:</p>
 <pre><code>code</code></pre>
 <p>Add a language to syntax highlight code blocks:</p>
-<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-1_66620d02025b2711b0cee349e50799ef">
+<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-1_631be4bd8fec4bb4d815b76b7e33778b">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>probability_T <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a>Probability_S_given_T <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a>probability_T_and_S <span class="ot">&lt;-</span> probability_T <span class="sc">*</span> Probability_S_given_T</span>
@@ -374,26 +371,66 @@ Note
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; P(T ∩ S): 0.06</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>probability_NS_given_T <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>probability_T_and_NS <span class="ot">&lt;-</span>probability_T <span class="sc">*</span> probability_NS_given_T</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="fu">cat</span>(<span class="st">"P(T ∩ NS):"</span>, probability_T_and_NS,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; P(T ∩ NS): 0.24</code></pre>
 </div>
-<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-2_15ddc482b8b5430e880cf39bb16d6264">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>cars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["speed"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["dist"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"2"},{"1":"4","2":"10"},{"1":"7","2":"4"},{"1":"7","2":"22"},{"1":"8","2":"16"},{"1":"9","2":"10"},{"1":"10","2":"18"},{"1":"10","2":"26"},{"1":"10","2":"34"},{"1":"11","2":"17"},{"1":"11","2":"28"},{"1":"12","2":"14"},{"1":"12","2":"20"},{"1":"12","2":"24"},{"1":"12","2":"28"},{"1":"13","2":"26"},{"1":"13","2":"34"},{"1":"13","2":"34"},{"1":"13","2":"46"},{"1":"14","2":"26"},{"1":"14","2":"36"},{"1":"14","2":"60"},{"1":"14","2":"80"},{"1":"15","2":"20"},{"1":"15","2":"26"},{"1":"15","2":"54"},{"1":"16","2":"32"},{"1":"16","2":"40"},{"1":"17","2":"32"},{"1":"17","2":"40"},{"1":"17","2":"50"},{"1":"18","2":"42"},{"1":"18","2":"56"},{"1":"18","2":"76"},{"1":"18","2":"84"},{"1":"19","2":"36"},{"1":"19","2":"46"},{"1":"19","2":"68"},{"1":"20","2":"32"},{"1":"20","2":"48"},{"1":"20","2":"52"},{"1":"20","2":"56"},{"1":"20","2":"64"},{"1":"22","2":"66"},{"1":"23","2":"54"},{"1":"24","2":"70"},{"1":"24","2":"92"},{"1":"24","2":"93"},{"1":"24","2":"120"},{"1":"25","2":"85"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>probability_NT <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>probability_S_given_NT <span class="ot">&lt;-</span><span class="fl">0.6</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>probability_NT_and_S <span class="ot">&lt;-</span> probability_NT <span class="sc">*</span> probability_S_given_NT</span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="fu">cat</span>(<span class="st">"P(NT ∩ S):"</span>, probability_NT_and_S,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; P(NT ∩ S): 0.42</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>probability_NS_given_NT <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>probability_NT_and_NS <span class="ot">&lt;-</span> probability_NT <span class="sc">*</span> probability_NS_given_NT</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="fu">cat</span>(<span class="st">"P(NT ∩ NS):"</span>, probability_NT_and_NS,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; P(NT ∩ NS): 0.28</code></pre>
 </div>
 </div>
+<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-2_89e3a7c640b9384f1498ca4da2af4d91">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>percentage_all <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">cat</span>(<span class="st">"Percentage of customers using all three:"</span>, percentage_all,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Percentage of customers using all three: 0.5</code></pre>
 </div>
-<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-3_309d9a6462ce7f52bf5764543dea986e">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">plot</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="01_probability_files/figure-html/unnamed-chunk-3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="01_probability_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></a></p>
-</figure>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>percentage_TA_and_SMA <span class="ot">&lt;-</span> <span class="fl">7.3</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>percentage_SMA_and_COM <span class="ot">&lt;-</span> <span class="fl">8.8</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>percentage_COM_and_TA <span class="ot">&lt;-</span> <span class="fl">3.3</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="fu">cat</span>(<span class="st">"percentage of customers using two devices:"</span>, percentage_TA_and_SMA<span class="sc">+</span>percentage_SMA_and_COM<span class="sc">+</span>percentage_COM_and_TA,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; percentage of customers using two devices: 19.4</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>percentage_TA <span class="ot">&lt;-</span> <span class="fl">27.8</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>percentage_SMA <span class="ot">&lt;-</span> <span class="fl">42.3</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>percentage_COM <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="fu">cat</span>(<span class="st">"percentage of custmors using one device:"</span>, percentage_TA<span class="sc">+</span>percentage_SMA<span class="sc">+</span>percentage_COM,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; percentage of custmors using one device: 80.1</code></pre>
+</div>
+</div>
+<div class="cell" data-hash="01_probability_cache/html/unnamed-chunk-3_31534ee0bc7a898115962af53ef421cb">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>probability_B_given_A <span class="ot">&lt;-</span> <span class="fl">0.97</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>probability_B_given_NA <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>probability_A <span class="ot">&lt;-</span> <span class="fl">0.04</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>probability_NA <span class="ot">&lt;-</span> <span class="fl">0.96</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a>probability_NA_given_B <span class="ot">&lt;-</span> (probability_B_given_NA <span class="sc">*</span> probability_NA) <span class="sc">/</span> ((probability_B_given_A <span class="sc">*</span> probability_A) <span class="sc">+</span>(probability_B_given_NA <span class="sc">*</span> probability_NA))</span>
+<span id="cb16-6"><a href="#cb16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="fu">cat</span>(<span class="st">"P(NA|B):"</span>, probability_NA_given_B,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; P(NA|B): 0.1983471</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>probability_A_given_B <span class="ot">&lt;-</span> (probability_B_given_A <span class="sc">*</span> probability_A) <span class="sc">/</span> ((probability_B_given_A <span class="sc">*</span> probability_A) <span class="sc">+</span>(probability_B_given_NA <span class="sc">*</span> probability_NA))</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">cat</span>(<span class="st">"P(A|B):"</span>, probability_A_given_B,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; P(A|B): 0.8016529</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">cat</span>(<span class="st">"These results show that in case the alarm is triggered, there is a possibility of about"</span>,probability_NA_given_B <span class="sc">*</span><span class="dv">100</span>,<span class="st">"% that the product is flawless and a probability of"</span>,probability_A_given_B<span class="sc">*</span><span class="dv">100</span>,<span class="st">"% that the product is faulty."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; These results show that in case the alarm is triggered, there is a possibility of about 19.83471 % that the product is flawless and a probability of 80.16529 % that the product is faulty.</code></pre>
 </div>
 </div>
 
@@ -750,7 +787,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","loop":true,"descPosition":"bottom"});</script>
 
 
 

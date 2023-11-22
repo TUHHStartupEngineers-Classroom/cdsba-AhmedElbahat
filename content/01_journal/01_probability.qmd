@@ -89,12 +89,42 @@ probability_T <- 0.3
 Probability_S_given_T <- 0.2
 probability_T_and_S <- probability_T * Probability_S_given_T
 cat("P(T ∩ S):", probability_T_and_S,"\n")
+probability_NS_given_T <- 0.8
+probability_T_and_NS <-probability_T * probability_NS_given_T
+cat("P(T ∩ NS):", probability_T_and_NS,"\n")
+probability_NT <- 0.7
+probability_S_given_NT <-0.6
+probability_NT_and_S <- probability_NT * probability_S_given_NT
+cat("P(NT ∩ S):", probability_NT_and_S,"\n")
+probability_NS_given_NT <- 0.4
+probability_NT_and_NS <- probability_NT * probability_NS_given_NT
+cat("P(NT ∩ NS):", probability_NT_and_NS,"\n")
 ```
 
 ```{r}
-cars
+percentage_all <- 0.5
+cat("Percentage of customers using all three:", percentage_all,"\n")
+percentage_TA_and_SMA <- 7.3
+percentage_SMA_and_COM <- 8.8
+percentage_COM_and_TA <- 3.3
+cat("percentage of customers using two devices:", percentage_TA_and_SMA+percentage_SMA_and_COM+percentage_COM_and_TA,"\n")
+percentage_TA <- 27.8
+percentage_SMA <- 42.3
+percentage_COM <- 10
+cat("percentage of custmors using one device:", percentage_TA+percentage_SMA+percentage_COM,"\n")
 ```
 
 ```{r}
-plot(cars)
+probability_B_given_A <- 0.97
+probability_B_given_NA <- 0.01
+probability_A <- 0.04
+probability_NA <- 0.96
+probability_NA_given_B <- (probability_B_given_NA * probability_NA) / ((probability_B_given_A * probability_A) +(probability_B_given_NA * probability_NA))
+
+cat("P(NA|B):", probability_NA_given_B,"\n")
+
+probability_A_given_B <- (probability_B_given_A * probability_A) / ((probability_B_given_A * probability_A) +(probability_B_given_NA * probability_NA))
+cat("P(A|B):", probability_A_given_B,"\n")
+
+cat("These results show that in case the alarm is triggered, there is a possibility of about",probability_NA_given_B *100,"% that the product is flawless and a probability of",probability_A_given_B*100,"% that the product is faulty.")
 ```
