@@ -85,7 +85,10 @@ code
 Add a language to syntax highlight code blocks:
 
 ```{r}
-1 + 1
+probability_T <- 0.3
+Probability_S_given_T <- 0.2
+probability_T_and_S <- probability_T * Probability_S_given_T
+cat("P(T ∩ S):", probability_T_and_S,"\n")
 ```
 
 ```{r}
