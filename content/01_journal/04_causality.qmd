@@ -2,6 +2,20 @@
 title: "Causality"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+```{r}
+
+# Load necessary library
+library(ggplot2)
+
+# Create a sample dataset (you can use any built-in dataset or import your own)
+data <- read.csv("C:/Users/ahmed/OneDrive/Dokumente/archive/divorce_margarine.csv")
+
+# Print the dataset
+print(data)
+
+# Plot the dataset using ggplot2
+ggplot(data, aes(x =divorce_rate , y = margarine_consumption)) +
+  geom_quantile(stat = "identity", fill = "red") +
+  labs(title = "Sample Bar Plot", x = "divorce_rate", y = "margarine_consumption")
+
+```

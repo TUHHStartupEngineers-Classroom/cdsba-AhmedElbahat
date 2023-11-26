@@ -1,0 +1,18 @@
+{
+  "hash": "381423396cbf2bbcb50752ef62bb6626",
+  "result": {
+    "markdown": "---\ntitle: \"Causality\"\n---\n\n::: {.cell hash='04_causality_cache/html/unnamed-chunk-1_8fa914e095c42f9aa3050954296e034d'}\n\n```{.r .cell-code}\n# Load necessary library\nlibrary(ggplot2)\n\n# Create a sample dataset (you can use any built-in dataset or import your own)\ndata <- read.csv(\"C:/Users/ahmed/OneDrive/Dokumente/archive/divorce_margarine.csv\")\n\n# Print the dataset\nprint(data)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n#>    year divorce_rate margarine_consumption\n#> 1  2000          5.0                   8.2\n#> 2  2001          4.7                   7.0\n#> 3  2002          4.6                   6.5\n#> 4  2003          4.4                   5.3\n#> 5  2004          4.3                   5.2\n#> 6  2005          4.1                   4.0\n#> 7  2006          4.2                   4.6\n#> 8  2007          4.2                   4.5\n#> 9  2008          4.2                   4.2\n#> 10 2009          4.1                   3.7\n```\n:::\n\n```{.r .cell-code}\n# Plot the dataset using ggplot2\nggplot(data, aes(x =divorce_rate , y = margarine_consumption)) +\n  geom_quantile(stat = \"identity\", fill = \"red\") +\n  labs(title = \"Sample Bar Plot\", x = \"divorce_rate\", y = \"margarine_consumption\")\n```\n\n::: {.cell-output .cell-output-stderr}\n```\n#> Warning in geom_quantile(stat = \"identity\", fill = \"red\"): Ignoring unknown\n#> parameters: `fill`\n```\n:::\n\n::: {.cell-output-display}\n![](04_causality_files/figure-html/unnamed-chunk-1-1.png){width=672}\n:::\n:::",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-in-header": [
+        "<link href=\"../../site_libs/pagedtable-1.1/css/pagedtable.css\" rel=\"stylesheet\" />\r\n<script src=\"../../site_libs/pagedtable-1.1/js/pagedtable.js\"></script>\r\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
