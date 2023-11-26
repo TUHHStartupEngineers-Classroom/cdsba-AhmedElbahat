@@ -1,7 +1,26 @@
 ---
 title: "Regression and Statistical Inference"
 ---
+```{r}
+x <- readRDS("C:/Users/ahmed/OneDrive/Dokumente/Causal_Data_Science_Data/car_prices.rds")
+```
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+
+
+```{r}
+dim(x)
+```
+
+
+```{r}
+head(x)
+summary(x)
+cat("The data contains char variables and numbers as double so they are different types ")
+```
+
+
+```{r}
+lm_all <- lm(price ~ ., data= x)
+summary(lm_all)
+```
+
