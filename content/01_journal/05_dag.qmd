@@ -2,3 +2,55 @@
 title: "Directed Acyclic Graphs"
 ---
 
+```{r}
+
+library("dagitty")
+library("ggdag")
+# Collider
+collider <- dagify(
+  P ~ S_AB,
+  P ~ S_CD,
+  coords = list(x = c(S_CD = 3, P = 2, S_AB =1),               y = c(S_CD = 1, P = 0,S_AB = 1)))
+
+# Plot DAG
+ggdag(collider) 
+```
+
+
+```{r}
+ customers <- readRDS("C:/Users/ahmed/OneDrive/Dokumente/Causal_Data_Science_Data/customer_sat.rds")
+
+lm_customer <- lm(satisfaction ~ follow_ups , data= customers)
+summary(lm_customer)
+```
+
+```{r}
+lm_customer_subscription <- lm(satisfaction ~ follow_ups + subscription , data= customers)
+summary(lm_customer_subscription)
+```
+
+```{r}
+cat("The realtion between satisfaction with the follow_ups for the accounts that have a subscription is more realted as the adjusted R in there is 0.9 and the Pvalue with the follow up with account to subscription is lower and the estimate has changed from -3.3093 to 2.1944  in the follow up.")
+```
+
+```{r}
+
+library(ggplot2)
+
+# Not conditioning on student
+berk_not_cond <- ggplot(customers, aes(x = follow_ups, y = satisfaction)) +
+  geom_point() +
+  stat_smooth(method = "lm", se = F)
+
+# Conditioning on student  
+berk_cond <- ggplot(customers, aes(x = follow_ups, y =satisfaction,color = subscription, alpha = subscription))+
+   geom_point() +
+   stat_smooth(method = "lm", se = F)+
+  
+  
+   scale_alpha_manual(values = c("Subscription" = 1, "no_Subscription" = 0.2)) +theme(legend.position =      "right")
+
+# Plot both
+berk_not_cond
+berk_cond
+```
