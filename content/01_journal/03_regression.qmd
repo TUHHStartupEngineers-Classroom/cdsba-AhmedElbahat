@@ -22,5 +22,33 @@ cat("The data contains char variables and numbers as double so they are differen
 ```{r}
 lm_all <- lm(price ~ ., data= x)
 summary(lm_all)
+cat("The factors that are relevant are: 1) Horsepower, 2) EngineSize, and3) Stroke")
+```
+```{r}
+lm_imp <- lm(price ~ horsepower, data = x)
+summary(lm_imp)
+
+
+sprintf("Adjusted R^2: %.2f", broom::glance(lm_imp)$adj.r.squared)
+
+# AIC
+sprintf("AIC: %.2f", AIC(lm_imp))
+
+cat("I choose Horsepower and the datatype is double, if I increased the horse power the price will get higher as my estimate is 166.94 so the number of horsepower will be multiplied by this value.")
+
+cat("\n")
+
+cat("It is statistically Significant.")
+
+```
+```{r}
+library(dplyr)
+x %>% mutate(seat_heating = TRUE)
 ```
 
+```{r}
+lm_ss <- lm(price ~ ., data= x)
+summary(lm_ss)
+
+cat("The seat heating has no coefficient as it has no effect on the total price because it is true for all the cases.")
+```
