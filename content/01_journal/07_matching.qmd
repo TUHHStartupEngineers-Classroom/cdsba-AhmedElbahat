@@ -1,7 +1,80 @@
 ---
 title: "Matching and Subclassification"
 ---
+```{r}
+membership <-readRDS("C:/Users/ahmed/OneDrive/Dokumente/Causal_Data_Science_Data/membership.rds")
+```
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+```{r}
+# Load packages
+library(dagitty)
+library(ggdag)
+library(ggplot2)
+
+# Define DAG
+dag_model <- 'dag {
+  bb="0,0,1,1"
+  "Age" [exposure,pos="0.25,0.2"]
+  "Membership" [pos="0.35,0.25"]
+  "avg_purchase" [outcome,pos="0.35,0.2"]
+  card [pos="0.25,0.25"]
+  "Membership" -> "Age"
+  "Membership" -> "avg_purchase"
+  card -> "Age"
+  card -> "Membership"
+  card -> "avg_purchase"
+}'
+
+# DAG with adjustment sets (and custom layout)
+ggdag_adjustment_set(dag_model, shadow = T, text = F) +
+  guides(color = "none") +  # Turn off legend
+  geom_dag_text(color = NA) +
+  geom_dag_edges(edge_color = "white") +
+  geom_dag_label_repel(aes(label = name))
+```
+
+
+```{r}
+model_naive <- lm(avg_purch ~ card, data = membership)
+summary(model_naive)
+```
+
+
+```{r}
+library(MatchIt)
+cem <- matchit(card ~ avg_purch, data = membership, method = 'cem', estimand = 'ATE')
+summary(cem)
+```
+
+```{r}
+
+nn <- matchit(card ~ avg_purch, data = membership, method = "nearest",  distance = "mahalanobis", replace = T)
+summary(nn)
+```
+
+
+
+```{R}
+logistic_inv <- glm(card ~ avg_purch, data = membership, family = binomial(link= "logit"))
+summary(logistic_inv)
+```
+
+```{r}
+
+library(dplyr)
+
+df_aug <- membership %>%
+mutate(propensity = predict(logistic_inv, type = "response"))
+
+# Extend data by IPW scores
+df_ipw <- df_aug %>% mutate(
+  ipw = (card/propensity) + ((1-card) / (1-propensity)))
+
+# Look at data with IPW scores
+df_ipw %>% 
+  select(card, avg_purch, propensity, ipw)
+
+ggplot(df_aug, aes(x = propensity)) +
+  geom_histogram(alpha = .8, color = "white")
+
+```
