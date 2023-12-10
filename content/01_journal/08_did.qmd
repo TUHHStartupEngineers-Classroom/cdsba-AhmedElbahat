@@ -1,7 +1,47 @@
 ---
 title: "Difference-in-Differences"
 ---
+```{r}
+hospitals <-readRDS("C:/Users/ahmed/OneDrive/Dokumente/Causal_Data_Science_Data/hospdd.rds")
+```
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+
+```{r}
+library(dplyr)
+m <- 6
+
+df_B_zoom_in  <- hospitals %>% filter(month %in% (m/2):(m/2+1))
+
+before_treatment <- df_B_zoom_in %>%
+  filter(procedure == 0) %>% 
+  pull(satis)
+after_treatment <- df_B_zoom_in %>%
+  filter(procedure == 1) %>% 
+  pull(satis)
+
+
+estimantion <- after_treatment - before_treatment
+
+estimantion
+
+```
+
+
+
+
+
+
+
+
+```{r}
+
+summary(lm(satis ~ month + hospital , data = hospitals)) 
+```
+
+
+```{r}
+summary(lm(satis ~ as.factor(month) + as.factor(hospital) , data = hospitals)) 
+
+
+cat("When we used as.factor the output was a regressor for each month and and for each hopital , it was more detailed. But when we used th lm without it gave a general relation for all the months and hospitals not specified.")
+```
