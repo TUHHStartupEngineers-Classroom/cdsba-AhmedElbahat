@@ -1,7 +1,67 @@
 ---
 title: "Randomized Controlled Trials"
 ---
+```{r}
+AB_testing <-readRDS("C:/Users/ahmed/OneDrive/Dokumente/Causal_Data_Science_Data/abtest_online.rds")
+```
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+
+```{r}
+library("ggplot2")
+compare_purchase <- ggplot(AB_testing, aes(x = chatbot, y = purchase_amount, color = as.factor(chatbot))) +
+  stat_summary(geom = "errorbar", 
+               width = .5,
+               fun.data = "mean_se", 
+               fun.args = list(mult=1.96),
+               show.legend = F) +
+labs(x = "chatbot", y = "purchase_amount", title = "Difference in purchace_amount")
+
+compare_purchase
+```
+
+```{r}
+library("ggplot2")
+compare_mobile <- ggplot(AB_testing, aes(x = chatbot, y = mobile_device, color = as.factor(chatbot))) +
+  stat_summary(geom = "errorbar", 
+               width = .5,
+               fun.data = "mean_se", 
+               fun.args = list(mult=1.96),
+               show.legend = F) +
+labs(x = "chatbot", y = "mobile_device", title = "Difference in mobile_device")
+
+compare_mobile
+```
+
+
+```{r}
+library("ggplot2")
+compare_visits <- ggplot(AB_testing, aes(x = chatbot, y = previous_visit, color = as.factor(chatbot))) +
+  stat_summary(geom = "errorbar", 
+               width = .5,
+               fun.data = "mean_se", 
+               fun.args = list(mult=1.96),
+               show.legend = F) +
+labs(x = "chatbot", y = "previous_visit", title = "Difference in previous_visit")
+
+compare_visits
+```
+
+
+```{r}
+
+lm_all <- lm(purchase_amount ~ chatbot, data = AB_testing)
+summary(lm_all)
+```
+
+
+```{r}
+
+lm_inter <- lm(purchase_amount ~ chatbot*mobile_device, data = AB_testing)
+summary(lm_inter)
+```
+
+```{r}
+
+lm_logistic <- glm(formula= purchase ~ chatbot, family=binomial(link='logit'), data= AB_testing)
+summary(lm_logistic)
+```
