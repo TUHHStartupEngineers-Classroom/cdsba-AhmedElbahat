@@ -2,6 +2,72 @@
 title: "Regression Discontinuity"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+```{r}
+coupons <-readRDS("C:/Users/ahmed/OneDrive/Dokumente/Causal_Data_Science_Data/coupon.rds")
+```
+
+
+```{r}
+library(dplyr)
+c0 <- 60
+# Specify bandwidth
+bw <- 5
+
+bwHalf <- c0 + c(-bw/2, bw/2)
+bwDouble <- c0 + c(-bw*2, bw*2)
+
+# Subsets below and above threshold in specified bandwidth
+df_bwHalf_below <- coupons %>% filter(days_since_last >= bwHalf[1] & days_since_last < c0)
+df_bwHalf_above <- coupons %>% filter(days_since_last >= c0 & days_since_last <= bwHalf[2])
+
+
+df_bw_half <- bind_rows(df_bwHalf_above, df_bwHalf_below)
+dim(df_bw_half)
+
+df_bwDouble_below <- coupons %>% filter(days_since_last >= bwDouble[1] & days_since_last < c0)
+df_bwDouble_above <- coupons %>% filter(days_since_last >= c0 & days_since_last <= bwDouble[2])
+
+df_bw_double <- bind_rows(df_bwDouble_above, df_bwDouble_below)
+dim(df_bw_double)
+
+
+model_bw_below <- lm(purchase_after ~ days_since_last, df_bwHalf_below)
+model_bw_above <- lm(purchase_after ~ days_since_last, df_bwHalf_above)
+
+y0Half <- predict(model_bw_below, tibble(days_since_last = c0))
+y1Half <- predict(model_bw_above, tibble(days_since_last = c0))
+
+late <- y1Half - y0Half
+sprintf("LATE_Half_BW: %.2f", late)
+
+
+model_bw_below <- lm(purchase_after ~ days_since_last, df_bwDouble_below)
+model_bw_above <- lm(purchase_after ~ days_since_last, df_bwDouble_above)
+
+y0Double <- predict(model_bw_below, tibble(days_since_last = c0))
+y1Double <- predict(model_bw_above, tibble(days_since_last = c0))
+
+late <- y1Double - y0Double
+sprintf("LATE_Double_BW: %.2f", late)
+
+```
+
+
+```{r}
+shipments <-readRDS("C:/Users/ahmed/OneDrive/Dokumente/Causal_Data_Science_Data/shipping.rds")
+```
+
+```{r}
+library(rddensity)
+#cut off
+c1 <- 30
+
+rddd <- rddensity(shipments$purchase_amount, c = c1)
+
+summary(rddd)
+
+rdd_plot <- rdplotdensity(rddd,shipments$purchase_amount, plotN = 100)
+
+
+cat("We can not use a cut-off of 30 euroes because as we can see here in the graph the intervals are not overlaping so there is a suspession of manipulation and we can not use RDD to obtain valid results with this cut-off. However if the cut-off is 60, they will overlap")
+```
