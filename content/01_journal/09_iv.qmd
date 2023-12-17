@@ -1,7 +1,60 @@
 ---
 title: "Instrumental Variables"
 ---
+```{r}
+newFeature <-readRDS("C:/Users/ahmed/OneDrive/Dokumente/Causal_Data_Science_Data/rand_enc.rds")
+```
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+```{r}
+library("dagitty")
+library("ggdag")
+library("ggplot2")
+
+
+# Instrumental Variable Estimation - Application
+iv_expl <- dagify(
+  Y ~ D,
+  Y ~ U,
+  D ~ U,
+  D ~ Z,
+  exposure = "D",
+  latent = "U",
+  outcome = "Y",
+  coords = list(x = c(U = 1, D = 0, Y = 2, Z = -1),
+                y = c(U = 1, D = 0, Y = 0, Z = 0)),
+  labels = c("D" = "Used_ftr", 
+             "Y" = "time_spent", 
+             "U" = "Willingness",
+             "Z" = "Rand_Enc")
+)
+ggdag(iv_expl, text = T) +
+  guides(color = "none") +
+  geom_dag_text(color = "white") +
+  geom_dag_edges(edge_color = "white") +
+  geom_dag_label_repel(aes(label = label))
+
+
+
+```
+
+```{r}
+model_naive_biased <- lm(time_spent ~ used_ftr, data = newFeature)
+
+summary(model_naive_biased)
+```
+```{r}
+cor(newFeature) %>% round(2)
+
+cat(" There is a positive correaltion between rand_enc and used_ftr and used_ftr has a big influence on time_spent so our IV is very importnat in this application.")
+```
+
+
+```{r}
+library("estimatr")
+model_iv <- iv_robust(time_spent ~ used_ftr | rand_enc, data = newFeature)
+summary(model_iv)
+
+
+
+cat("The estimate is biased and it is upward biased")
+```
